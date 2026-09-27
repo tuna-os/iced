@@ -102,6 +102,7 @@ impl Compositor {
 
         log::info!("{settings:#?}");
 
+        #[cfg(wayland_platform)]
         unsafe {
             std::env::remove_var("VK_LOADER_DRIVERS_DISABLE");
         }
