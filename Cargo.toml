@@ -122,7 +122,6 @@ wayland = [
     "iced_renderer/wayland",
     "iced_winit/wayland",
     "iced_runtime/wayland",
-    "iced_widget/wayland",
     "iced_core/wayland",
 ]
 
