@@ -23,7 +23,7 @@ jobs:
       - uses: hecrj/setup-rust-action@v2.0.1
         with:
           rust-version: ${{ matrix.rust }}
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
       - name: Install dependencies

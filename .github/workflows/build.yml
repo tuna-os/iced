@@ -19,7 +19,7 @@ jobs:
     - uses: hecrj/setup-rust-action@v2.0.1
     - name: Install cargo-deb
       run: cargo install cargo-deb
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v7.0.1
       with:
         persist-credentials: false
     - name: Install dependencies
@@ -50,7 +50,7 @@ jobs:
       contents: read
     steps:
     - uses: hecrj/setup-rust-action@v2.0.1
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v7.0.1
       with:
         persist-credentials: false
     - name: Enable static CRT linkage
@@ -74,7 +74,7 @@ jobs:
       contents: read
     steps:
     - uses: hecrj/setup-rust-action@v2.0.1
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v7.0.1
       with:
         persist-credentials: false
     - name: Build todos binary
@@ -95,7 +95,7 @@ jobs:
       contents: read
     steps:
     - uses: hecrj/setup-rust-action@v2.0.1
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v7.0.1
       with:
         persist-credentials: false
     - name: Install cross
