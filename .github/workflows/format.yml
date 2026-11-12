@@ -5,13 +5,19 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+permissions: {}
+
 jobs:
   all:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-    - uses: hecrj/setup-rust-action@v2
+    - uses: hecrj/setup-rust-action@v2.0.1
       with:
         components: rustfmt
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v7.0.1
+      with:
+        persist-credentials: false
     - name: Check format
       run: cargo fmt --all -- --check --verbose
