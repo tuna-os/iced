@@ -1,15 +1,19 @@
 name: Document
 on: [push, pull_request]
+permissions: {}
+
 jobs:
   all:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-    - uses: hecrj/setup-rust-action@v2
+    - uses: hecrj/setup-rust-action@v2.0.1
       with:
         rust-version: nightly
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.8.0 # zizmor: ignore[artipacked] actions-gh-pages pushes the docs later in this job
     - name: Generate documentation
       run: |
         RUSTDOCFLAGS="--cfg docsrs" \
@@ -36,7 +40,7 @@ jobs:
       run: cp docs/redirect.html target/doc/index.html
     - name: Publish documentation
       if: github.ref == 'refs/heads/master'
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v3.9.3
       with:
         deploy_key: ${{ secrets.DOCS_DEPLOY_KEY }}
         external_repository: iced-rs/docs

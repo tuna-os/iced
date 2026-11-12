@@ -9,14 +9,20 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+permissions: {}
+
 jobs:
   vulnerabilities:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-    - uses: hecrj/setup-rust-action@v2
+    - uses: hecrj/setup-rust-action@v2.0.1
     - name: Install cargo-audit
       run: cargo install cargo-audit
     - uses: actions/checkout@master
+      with:
+        persist-credentials: false
     - name: Resolve dependencies
       run: cargo update
     - name: Audit vulnerabilities

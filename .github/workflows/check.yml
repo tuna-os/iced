@@ -5,17 +5,23 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+permissions: {}
+
 jobs:
   wasm:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     env:
       RUSTFLAGS: --cfg=web_sys_unstable_apis
     steps:
-    - uses: hecrj/setup-rust-action@v2
+    - uses: hecrj/setup-rust-action@v2.0.1
       with:
         rust-version: stable
         targets: wasm32-unknown-unknown
     - uses: actions/checkout@master
+      with:
+        persist-credentials: false
     - name: Run checks
       run: cargo check --package iced --target wasm32-unknown-unknown
     - name: Check compilation of `tour` example
@@ -25,8 +31,12 @@ jobs:
 
   widget:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-    - uses: hecrj/setup-rust-action@v2
+    - uses: hecrj/setup-rust-action@v2.0.1
     - uses: actions/checkout@master
+      with:
+        persist-credentials: false
     - name: Check standalone `iced_widget` crate
       run: cargo check --package iced_widget --features image,svg,canvas

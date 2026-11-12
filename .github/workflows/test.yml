@@ -5,9 +5,13 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+permissions: {}
+
 jobs:
   all:
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     env:
       RUSTFLAGS: --deny warnings
       ICED_TEST_BACKEND: tiny-skia
@@ -16,10 +20,12 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
         rust: [stable, beta, "1.88"]
     steps:
-      - uses: hecrj/setup-rust-action@v2
+      - uses: hecrj/setup-rust-action@v2.0.1
         with:
           rust-version: ${{ matrix.rust }}
       - uses: actions/checkout@master
+        with:
+          persist-credentials: false
       - name: Install dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
